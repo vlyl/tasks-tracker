@@ -1,26 +1,19 @@
 import React from 'react'
-import tasksList from '../db.json'
 
-type TaskItem = {
-  id: number
-  text: string
-  day: string
-  reminder: boolean
-}
+import Task, { DeleteTask, TaskItem } from './Task'
 
-function Tasks() {
-  
-  console.log(tasksList.tasks)
-
+function Tasks(param: { tasks: TaskItem[]; onDelete: DeleteTask }) {
   return (
-    <div className='task'>
-      {tasksList.tasks.map((task) => ( // this is not a arrow function, it's key value map
-          <h3>{task.text}</h3>
-        ))} 
+    <div className="task">
+      {param.tasks.map(
+        (
+          task // this is not a arrow function, it's key value map
+        ) => (
+          <Task key={task.id} task={task} onDelete={param.onDelete} />
+        )
+      )}
     </div>
   )
 }
-
-export {Tasks}
 
 export default Tasks

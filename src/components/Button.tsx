@@ -1,13 +1,17 @@
 import React from 'react'
 
-function Button(param: { color: string, text: string, onClick: React.MouseEventHandler<HTMLButtonElement> }) {
-
+function Button(param: {
+  color: string
+  text: string
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+}) {
   return (
-    <button onClick={param.onClick} 
-      className='btn' 
-      style={{backgroundColor: param.color}}
+    <button
+      onClick={param.onClick}
+      className="btn"
+      style={{ backgroundColor: param.color }}
     >
-      { param.text }
+      {param.text}
     </button>
   )
 }
