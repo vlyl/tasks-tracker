@@ -9,10 +9,20 @@ type TaskItem = {
 }
 
 type DeleteTask = (id: number) => any
+type ToggleReminder = (id: number) => any
 
-function Task(param: { task: TaskItem; onDelete: DeleteTask }) {
+function Task(param: {
+  task: TaskItem
+  onDelete: DeleteTask
+  onToggle: ToggleReminder
+}) {
   return (
-    <div className="task">
+    <div
+      className="task"
+      onDoubleClick={() => {
+        param.onToggle(param.task.id)
+      }}
+    >
       <h3>
         {param.task.text}
         <FaTimes
@@ -27,6 +37,6 @@ function Task(param: { task: TaskItem; onDelete: DeleteTask }) {
   )
 }
 
-export type { DeleteTask, TaskItem }
+export type { DeleteTask, ToggleReminder, TaskItem }
 
 export default Task
