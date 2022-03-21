@@ -17,7 +17,9 @@ function Task(param: { task: TaskItem; onDelete: DeleteTask }) {
         {param.task.text}
         <FaTimes
           style={{ color: 'red', cursor: 'pointer' }}
-          onClick={() => param.onDelete(param.task.id)}
+          onClick={() => {
+            param.onDelete(param.task.id)
+          }}
         />
       </h3>
       <p>{param.task.day}</p>
