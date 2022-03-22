@@ -22,10 +22,14 @@ function App() {
     )
   }
 
+  const addTask = (task) => {
+    console.log(task)
+  }
+
   return (
     <div className='container'>
       <Header title='Tasks Tracker' />
-      <AddTask />
+      <AddTask onAdd={addTask} />
       {tasks.length > 0 ? (
         <TaskList
           tasks={tasks}
