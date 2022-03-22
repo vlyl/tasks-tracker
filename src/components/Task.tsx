@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaTimes } from 'react-icons/fa'
+import { FaTimes, FaCheck } from 'react-icons/fa'
 
 type TaskItem = {
   id: number
@@ -17,14 +17,15 @@ function Task(param: {
   onToggle: ToggleReminder
 }) {
   return (
-    <div
-      className="task"
-      onDoubleClick={() => {
-        param.onToggle(param.task.id)
-      }}
-    >
+    <div className={`task ${param.task.reminder ? 'reminder' : ''}`}>
       <h3>
         {param.task.text}
+        <FaCheck
+          style={{ color: 'green', cursor: 'pointer' }}
+          onClick={() => {
+            param.onToggle(param.task.id)
+          }}
+        />
         <FaTimes
           style={{ color: 'red', cursor: 'pointer' }}
           onClick={() => {

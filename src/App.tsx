@@ -4,23 +4,28 @@ import React, { useState } from 'react'
 
 import Header from './components/Header'
 import TaskList from './components/TaskList'
+import AddTask from './components/AddTask'
 import taskData from './db.json'
 
 function App() {
   const [tasks, setTasks] = useState(taskData.tasks)
 
   const deleteTask = (id: number) => {
-    console.log('deleting task: ', id)
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
   const toggleReminder = (id: number) => {
-    console.log('reminder:', id)
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
+    )
   }
 
   return (
-    <div className="container">
-      <Header title="Tasks Tracker" />
+    <div className='container'>
+      <Header title='Tasks Tracker' />
+      <AddTask />
       {tasks.length > 0 ? (
         <TaskList
           tasks={tasks}

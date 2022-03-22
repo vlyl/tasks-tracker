@@ -8,7 +8,7 @@ function TaskList(param: {
   onToggle: ToggleReminder
 }) {
   return (
-    <div className="task">
+    <div className='task'>
       {param.tasks.map(
         (
           task // this is not a arrow function, it's key value map

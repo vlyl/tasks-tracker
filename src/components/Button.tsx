@@ -8,7 +8,7 @@ function Button(param: {
   return (
     <button
       onClick={param.onClick}
-      className="btn"
+      className='btn'
       style={{ backgroundColor: param.color }}
     >
       {param.text}
