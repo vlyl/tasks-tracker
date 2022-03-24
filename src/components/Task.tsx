@@ -20,18 +20,20 @@ function Task(param: {
     <div className={`task ${param.task.reminder ? 'reminder' : ''}`}>
       <h3>
         {param.task.text}
-        <FaCheck
-          style={{ color: 'green', cursor: 'pointer' }}
-          onClick={() => {
-            param.onToggle(param.task.id)
-          }}
-        />
-        <FaTimes
-          style={{ color: 'red', cursor: 'pointer' }}
-          onClick={() => {
-            param.onDelete(param.task.id)
-          }}
-        />
+        <span>
+          <FaCheck
+            style={{ color: 'green', cursor: 'pointer', marginRight: '1' }}
+            onClick={() => {
+              param.onToggle(param.task.id)
+            }}
+          />
+          <FaTimes
+            style={{ color: 'red', cursor: 'pointer' }}
+            onClick={() => {
+              param.onDelete(param.task.id)
+            }}
+          />
+        </span>
       </h3>
       <p>{param.task.day}</p>
     </div>
