@@ -8,6 +8,8 @@ import AddTask from './components/AddTask'
 import taskData from './db.json'
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
+
   const [tasks, setTasks] = useState(taskData.tasks)
 
   const deleteTask = (id: number) => {
@@ -30,8 +32,14 @@ function App() {
 
   return (
     <div className='container'>
-      <Header title='Tasks Tracker' />
-      <AddTask onAdd={addTask} />
+      <Header
+        title='Tasks Tracker'
+        onAdd={() => {
+          setShowAddTask(!showAddTask)
+        }}
+        showAdd={!showAddTask}
+      />
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <TaskList
           tasks={tasks}
