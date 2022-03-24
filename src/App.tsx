@@ -1,16 +1,31 @@
 import './App.css'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Header from './components/Header'
 import TaskList from './components/TaskList'
 import AddTask from './components/AddTask'
-import taskData from './db.json'
+import { TaskItem } from './components/Task'
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
 
-  const [tasks, setTasks] = useState(taskData.tasks)
+  const newItems = {} as TaskItem[]
+  const [tasks, setTasks] = useState(newItems)
+
+  const fetchData = async () => {
+    const res = await fetch('http://localhost:5000/tasks')
+    const data = await res.json()
+    return data
+  }
+
+  useEffect(() => {
+    const getTasks = async () => {
+      const taskData = await fetchData()
+      setTasks(taskData)
+    }
+    getTasks()
+  }, [])
 
   const deleteTask = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id))
