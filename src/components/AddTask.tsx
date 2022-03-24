@@ -5,8 +5,23 @@ function AddTask(param: { onAdd: (task: any) => any }) {
   const [day, setDay] = useState('')
   const [reminder, setReminder] = useState(false)
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if (!text) {
+      alert('Please add a task ')
+      return
+    }
+
+    param.onAdd({ text, day, reminder })
+
+    setText('')
+    setDay('')
+    setReminder(false)
+  }
+
   return (
-    <form className='add-form' onSubmit={param.onAdd}>
+    <form className='add-form' onSubmit={onSubmit}>
       <div className='form-control'>
         <label>Task</label>
         <input
@@ -29,6 +44,7 @@ function AddTask(param: { onAdd: (task: any) => any }) {
         <label>Set Reminder</label>
         <input
           type='checkbox'
+          checked={reminder}
           value={String(reminder)}
           onChange={(e) => setReminder(e.currentTarget.checked)}
         />
