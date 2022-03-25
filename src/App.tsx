@@ -13,10 +13,18 @@ function App() {
   const newItems = {} as TaskItem[]
   const [tasks, setTasks] = useState(newItems)
 
+  const SERVER_URL = 'http://localhost:5000/tasks'
+
   const fetchData = async () => {
-    const res = await fetch('http://localhost:5000/tasks')
+    const res = await fetch(SERVER_URL)
     const data = await res.json()
     return data
+  }
+
+  const fetchItem = async (id: number) => {
+    const res = await fetch(SERVER_URL + `/${id}`)
+    const item = await res.json()
+    return item
   }
 
   useEffect(() => {
@@ -27,22 +35,48 @@ function App() {
     getTasks()
   }, [])
 
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+  const deleteTask = async (id: number) => {
+    const res = await fetch(SERVER_URL + `/${id}`, { method: 'DELETE' })
+
+    res.status === 200
+      ? setTasks(tasks.filter((task) => task.id !== id))
+      : alert('Error Delete Task')
   }
 
-  const toggleReminder = (id: number) => {
+  const toggleReminder = async (id: number) => {
+    const taskToToggle = await fetchItem(id)
+    const newItem = { ...taskToToggle, reminder: !taskToToggle.reminder }
+
+    const res = await fetch(SERVER_URL + `/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    })
+
+    const data = await res.json()
+
     setTasks(
       tasks.map((task) =>
-        task.id === id ? { ...task, reminder: !task.reminder } : task
+        task.id === id ? { ...task, reminder: data.reminder } : task
       )
     )
   }
 
-  const addTask = (task: any) => {
-    const id = Math.floor(Math.random() * 10000 + 1)
-    const newTask = { id, ...task }
-    setTasks([...tasks, newTask])
+  const addTask = async (task: any) => {
+    const res = await fetch(SERVER_URL, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    })
+
+    const data = await res.json()
+    console.log(data)
+
+    setTasks([...tasks, data as TaskItem])
   }
 
   return (
